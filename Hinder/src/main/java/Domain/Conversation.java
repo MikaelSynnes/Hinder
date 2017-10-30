@@ -45,8 +45,9 @@ public class Conversation implements Serializable {
         userB = B.getName();
         id=userA+userB;
     }
-
-    public Conversation(String name) {
-       id=name;
+    public Conversation(String name){
+        this.id=id;
     }
+
+  
 }

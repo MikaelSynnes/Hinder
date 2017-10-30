@@ -61,7 +61,7 @@ public class ForumServices {
         }
     }
 
-    @Path("conversation")
+        @Path("conversation")
     @GET
     public List<Conversation> getConversation() {
         List<Conversation> result = null;
@@ -74,15 +74,12 @@ public class ForumServices {
     }
 
     @Path("test")
-
-    public class TestFunksjon {
-
-        @PersistenceContext
-        EntityManager em;
-
         @GET
+    public  List<Conversation> getTest() {
 
-        public List<Conversation> getConversation() {
+        
+
+     
             List<Conversation> result = null;
 
             Conversation c = new Conversation(new User("mikael"), new User("Mikael2"));
@@ -94,5 +91,5 @@ public class ForumServices {
             return result != null ? result : Collections.EMPTY_LIST;
         }
 
-    }
+    
 }
