@@ -6,6 +6,7 @@
 package Service;
 
 import Domain.Conversation;
+import Domain.Location;
 import Domain.Message;
 import Domain.User;
 import java.util.Collections;
@@ -24,5 +25,34 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Mikael
  */
+@Stateless
+@Path("test")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class TestFunksjon {
 
+    Location loc;
+    @PersistenceContext
+    EntityManager em;
 
+   
+    @GET
+    public Location getLocation() {
+        loc = new Location(100, 12);
+        em.persist(loc);
+        Location result = null;
+        result = (Location) em.createQuery("SELECT l FROM Location l",
+                Location.class)
+                .getResultList();
+
+        return result;
+    }
+
+    public void createValues() {
+
+        loc = new Location(100, 12);
+        em.persist(loc);
+
+    }
+
+}
