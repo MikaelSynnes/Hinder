@@ -30,6 +30,8 @@ public class Location implements Serializable {
     protected long id;
     int latitude;
     int longitude;
+    
+    
     public Location(int latitude, int longitude){
         this.latitude=latitude;
         this.longitude=longitude;

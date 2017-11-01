@@ -43,8 +43,8 @@ public class TestFunksjon {
         Location result = null;
         result = (Location) em.createQuery("SELECT l FROM Location l",
                 Location.class)
-                .getResultList();
-
+                .getSingleResult();
+        
         return result;
     }
 

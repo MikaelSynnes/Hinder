@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package Domain;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
@@ -13,13 +15,18 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class User {
+@Table(name = "HUSER")
+public class User implements Serializable {
      
     @Id
     String name;
     String location;
     String password;
 
+    public User() {
+    }
+
+    
     public User(String n) {
         name=n;
     }
