@@ -32,10 +32,34 @@ import javax.ws.rs.core.MediaType;
 public class TestFunksjon {
 
     Location loc;
+    User usr;
+    Conversation con;
+    Message msg;
     @PersistenceContext
     EntityManager em;
 
    
+
+    /*@GET
+    public Location getLocation() {
+        loc = new Location(100, 12);
+        em.persist(loc);
+        Location result = null;
+        result = (Location) em.createQuery("SELECT l FROM Location l",
+                Location.class)
+                .getSingleResult();
+        
+        return result;
+    }*/
+    @GET
+    public List<User> getUser(){
+        usr = new User();
+        em.persist(usr);
+        List<User> result = null;
+        result = (List) em.createQuery("SELEC 1 from User 1",User.class).getResultList();
+        return result;
+    }
+
     @GET
     public List<Location> getLocation() {
         loc = new Location(100, 12);
@@ -47,7 +71,23 @@ public class TestFunksjon {
         
         return result;
     }
-
+    @GET
+    public List<Conversation> getConversation(){
+        con = new Conversation();
+        em.persist(con);
+        List<Conversation> result = null;
+        result = (List) em.createQuery("SELECT 1 FROM Conversation 1", Conversation.class).getResultList();
+        return result;
+                }
+    @GET
+    public List<Message> getMessage(){
+     msg = new Message();
+    em.persist(msg);
+    List<Message> result = null;
+    result = (List) em.createQuery("SELECT 1 FROM Message 1", Message.class).getResultList();
+    return result;
+    
+}
     public void createValues() {
 
         loc = new Location(100, 12);
