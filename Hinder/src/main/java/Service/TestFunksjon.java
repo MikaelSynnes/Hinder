@@ -37,13 +37,13 @@ public class TestFunksjon {
 
    
     @GET
-    public Location getLocation() {
+    public List<Location> getLocation() {
         loc = new Location(100, 12);
         em.persist(loc);
-        Location result = null;
-        result = (Location) em.createQuery("SELECT l FROM Location l",
+        List<Location> result = null;
+        result = (List) em.createQuery("SELECT l FROM Location l",
                 Location.class)
-                .getSingleResult();
+                .getResultList();
         
         return result;
     }
