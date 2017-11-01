@@ -36,7 +36,7 @@ public class TestFunksjon {
     EntityManager em;
 
    
-    @GET
+    /*@GET
     public Location getLocation() {
         loc = new Location(100, 12);
         em.persist(loc);
@@ -44,6 +44,17 @@ public class TestFunksjon {
         result = (Location) em.createQuery("SELECT l FROM Location l",
                 Location.class)
                 .getSingleResult();
+        
+        return result;
+    }*/
+     @GET
+    public List<Location> getLocation() {
+        loc = new Location(100, 12);
+        em.persist(loc);
+        List<Location> result = null;
+        result = (List) em.createQuery("SELECT l FROM Location l",
+                Location.class)
+                .getResultList();
         
         return result;
     }
