@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import Domain.Message;
+import javax.persistence.GeneratedValue;
 
 /**
  *
@@ -28,11 +29,10 @@ import Domain.Message;
 @Entity
 public class Conversation implements Serializable {
 
-
     @Id
-    String id;
-    String userA;
-    String userB;
+    @GeneratedValue
+    int id;
+
     @XmlTransient
     @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Message> messages;
@@ -40,14 +40,10 @@ public class Conversation implements Serializable {
     @Version
     Timestamp version;
 
-    public Conversation(User A, User B) {
-        userA = A.getName();
-        userB = B.getName();
-        id=userA+userB;
-    }
-    public Conversation(String name){
-        this.id=id;
+
+
+    public int getId() {
+        return id;
     }
 
-  
 }

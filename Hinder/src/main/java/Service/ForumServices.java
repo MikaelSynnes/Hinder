@@ -49,7 +49,7 @@ public class ForumServices {
         if (name != null) {
             Conversation c = em.find(Conversation.class, name);
             if (c == null) {
-                c = new Conversation(name);
+                c = new Conversation();
                 em.persist(c);
             }
             message.setConversation(c);
@@ -82,7 +82,7 @@ public class ForumServices {
      
             List<Conversation> result = null;
 
-            Conversation c = new Conversation(new User("mikael"), new User("Mikael2"));
+            Conversation c = new Conversation();
             em.persist(c);
             result = em.createQuery("FROM Conversation c",
                     Conversation.class)
