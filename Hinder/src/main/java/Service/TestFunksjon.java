@@ -74,28 +74,65 @@ public class TestFunksjon {
         return result;
 
     }
+     @Path("test")
+        @GET
+    public  List<Conversation> getTest() {
+
+        
+
+     
+            List<Conversation> result = null;
+
+            Conversation c = new Conversation();
+            em.persist(c);
+            result = em.createQuery("FROM Conversation c",
+                    Conversation.class)
+                    .getResultList();
+
+            return result != null ? result : Collections.EMPTY_LIST;
+        }
+
 
     @Path("login")
     @GET
 
-    public List<User> login(@QueryParam("name") String name, @QueryParam("pass") String password) {
-        List<User> result = null;
+    public User login(@QueryParam("name") String name, @QueryParam("pass") String password) {
+  
 
         if (name != null || password != null || checkUser(name)) {
-            List<User> users = getUser();
-            for (User u : users) {
-                if (u.getName().equals(name)) {
-                    return Collections.EMPTY_LIST;
-                }
-            }
+ 
 
-            result = (List) em.createQuery("SELECT u FROM User u"
-                    + " Where u.name = :nameParam AND u.password = :passParam", Message.class).setParameter("nameParam", name).setParameter("passParam", password).
-                    getResultList();
+           User u = em.createQuery("SELECT u FROM User u"
+                    + " Where u.name = :nameParam AND u.password = :passParam", User.class).setParameter("nameParam", name).setParameter("passParam", password).
+                    getSingleResult();
+               return u;
 
         }
-        return result;
+        else{
+            return null;
+        }
 
+    }
+    
+   
+        @Path("setloc")
+    @GET
+    public Location setLocation(@QueryParam("name")String name, @QueryParam("lat")long lat,@QueryParam("long")long lon){
+        if(!checkUser(name)){
+         
+        User u=getUser(name);
+        Location l=new Location(lat,lon);
+        em.persist(l);
+        long i=l.getId();
+        u.setLocation(l.getId());
+        
+        //em.createQuery("UPDATE User set Location= :iparam WHERE name= :nameParam").setParameter("nameParam", name).setParameter("iParam", i);
+               
+            
+        return l;
+            }else{
+        return new Location();
+        }
     }
     
     @Path("loc")
@@ -107,8 +144,8 @@ public class TestFunksjon {
     
      @Path("register")
     @GET
-    public User addUser(@QueryParam("name") String name, @QueryParam("pass") String password, @QueryParam("lat") int lat,
-            @QueryParam("long") int lon) {
+    public User addUser(@QueryParam("name") String name, @QueryParam("pass") String password, @QueryParam("lat") long lat,
+            @QueryParam("long") long lon) {
         if (checkUser(name)) {
             if (name != null || password != null) {
 
@@ -186,5 +223,7 @@ public class TestFunksjon {
         return true;
 
     }
-
+    
+    
+  
 }
