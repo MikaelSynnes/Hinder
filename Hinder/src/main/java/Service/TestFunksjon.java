@@ -97,6 +97,14 @@ public class TestFunksjon {
         return result;
 
     }
+    
+    @Path("loc")
+    @GET
+    public Location getLocation(@QueryParam("id")int i){
+        return em.createQuery("SELECT l FROM Location l WHERE l.id = :idParam",Location.class).setParameter("idParam", i).getSingleResult();
+        
+    }
+    
      @Path("register")
     @GET
     public User addUser(@QueryParam("name") String name, @QueryParam("pass") String password, @QueryParam("lat") int lat,
@@ -117,13 +125,32 @@ public class TestFunksjon {
 
         return null;
     }
+    
+    
+    @Path("getConv")
+    @GET
+    public List<Conversation> getConv(@QueryParam("name") String name){
+        
+        List<Conversation> convos=null;
+        try{
+              User user =getUser(name);
+               return user.getConversations();
+        }catch(Exception e){
+            return Collections.EMPTY_LIST;
+        }
+     
+        
+        
+        
+        
+    }
 
    
 
     @Path("createCon")
     @GET
     public Conversation createConversation(@QueryParam("name1") String name1, @QueryParam("name2") String name2) {
-        
+            
         if(!checkUser(name1)||!checkUser(name2)){
             User a=getUser(name1);
             User b=getUser(name2);

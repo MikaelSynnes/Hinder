@@ -54,6 +54,9 @@ public class User implements Serializable {
     public String getPassword() {
         return password;
     }
+    public List<Conversation> getConversations(){
+        return convos;
+    }
 
     public void setName(String name) {
         this.name = name;
