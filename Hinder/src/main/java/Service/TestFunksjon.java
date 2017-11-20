@@ -141,8 +141,14 @@ public class TestFunksjon {
         return em.createQuery("SELECT l FROM Location l WHERE l.id = :idParam",Location.class).setParameter("idParam", i).getSingleResult();
         
     }
+    @Path("userloc")
+    @GET
+    public Location getUserlocation(@QueryParam("name")String i){
+        long result=(long)em.createQuery("SELECT u.location from User u Where u.name=:nameParam").setParameter("nameParam", i).getSingleResult();
+      return getLocation((int) result);
+    }
     
-     @Path("register")
+     @Path("register")  
     @GET
     public User addUser(@QueryParam("name") String name, @QueryParam("pass") String password, @QueryParam("lat") long lat,
             @QueryParam("long") long lon) {
