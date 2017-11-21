@@ -31,14 +31,14 @@ public class ForumServices {
     EntityManager em;
 
     @GET
-    public List<Message> getMessages(@QueryParam("name") String name) {
+    public List<Message> getMessages(@QueryParam("name") int name) {
         List<Message> result = null;
-        if (name != null) {
+     
             result = em.createQuery("SELECT m FROM Message m WHERE m.conversation.id = :id",
                     Message.class)
                     .setParameter("id", name)
                     .getResultList();
-        }
+        
 
         return result != null ? result : Collections.EMPTY_LIST;
     }
