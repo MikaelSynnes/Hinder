@@ -31,7 +31,7 @@ public class Conversation implements Serializable {
 
     @Id
     @GeneratedValue
-    int id;
+    String id;
 
     @XmlTransient
     @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -42,7 +42,7 @@ public class Conversation implements Serializable {
 
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
