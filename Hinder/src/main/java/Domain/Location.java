@@ -30,10 +30,10 @@ public class Location implements Serializable {
     @Id
     @GeneratedValue
     protected long id;
-    long latitude;
-    long longitude;
+    double latitude;
+    double longitude;
 
-    public Location(long latitude, long longitude) {
+    public Location(double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
 
@@ -43,19 +43,19 @@ public class Location implements Serializable {
         return id;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

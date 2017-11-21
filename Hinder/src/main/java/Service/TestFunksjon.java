@@ -5,11 +5,13 @@
  */
 package Service;
 
+import Domain.CloseUser;
 import Domain.Conversation;
 import Domain.Location;
 import Domain.Message;
 import Domain.User;
 import static java.lang.System.out;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -42,6 +44,7 @@ public class TestFunksjon {
     EntityManager em;
     Message msg;
     User usr;
+    public static DistanceCalc dist;
 
     @GET
     public List<Location> getLocation() {
@@ -76,11 +79,7 @@ public class TestFunksjon {
     }
      @Path("test")
         @GET
-    public  List<Conversation> getTest() {
-
-        
-
-     
+    public  List<Conversation> getTest() {  
             List<Conversation> result = null;
 
             Conversation c = new Conversation();
@@ -91,17 +90,42 @@ public class TestFunksjon {
 
             return result != null ? result : Collections.EMPTY_LIST;
         }
+    
+    @Path("getclose")
+    @GET
+    public List<CloseUser> getClose(@QueryParam("id") String i){
+        List<CloseUser>  c;
+          dist=new DistanceCalc();
+            ArrayList close=new ArrayList();
+        close.add(new CloseUser());
+    
+        Location myLoc=getUserLocation(i);
+        List<User> u=getUser();
+        for(User us:u){
+            Location userLoc=getLocation(us.getLocation());
+         
+            
+                 double  dis=  dist.getDistance(myLoc,userLoc);
+                 System.out.println(dis);
+               if(dis<15.0&&userLoc.getId()!=myLoc.getId()){
+                   CloseUser cl=new CloseUser();
+                   cl.setDistance(dis);
+                   cl.setName(us.getName());
+                close.add(cl);             
+           }
+           
+        }
+        c=close;
+
+        return c;
+    }
 
 
     @Path("login")
     @GET
 
     public User login(@QueryParam("name") String name, @QueryParam("pass") String password) {
-  
-
         if (name != null || password != null || checkUser(name)) {
- 
-
            User u = em.createQuery("SELECT u FROM User u"
                     + " Where u.name = :nameParam AND u.password = :passParam", User.class).setParameter("nameParam", name).setParameter("passParam", password).
                     getSingleResult();
@@ -117,7 +141,7 @@ public class TestFunksjon {
    
         @Path("setloc")
     @GET
-    public Location setLocation(@QueryParam("name")String name, @QueryParam("lat")long lat,@QueryParam("long")long lon){
+    public Location setLocation(@QueryParam("name")String name, @QueryParam("lat")double lat,@QueryParam("long")double lon){
         if(!checkUser(name)){
          
         User u=getUser(name);
@@ -137,13 +161,21 @@ public class TestFunksjon {
     
     @Path("loc")
     @GET
-    public Location getLocation(@QueryParam("id")int i){
+    public Location getLocation(@QueryParam("id")long i){
+        try{
         return em.createQuery("SELECT l FROM Location l WHERE l.id = :idParam",Location.class).setParameter("idParam", i).getSingleResult();
+        }catch(Exception e){
+            Location l =new Location();
+            em.persist(l);
+            return l;
+            
+        }
+        
         
     }
     @Path("userloc")
     @GET
-    public Location getUserlocation(@QueryParam("name")String i){
+    public Location getUserLocation(@QueryParam("name")String i){
         long result=(long)em.createQuery("SELECT u.location from User u Where u.name=:nameParam").setParameter("nameParam", i).getSingleResult();
       return getLocation((int) result);
     }

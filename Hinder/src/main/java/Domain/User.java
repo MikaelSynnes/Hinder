@@ -31,9 +31,6 @@ public class User implements Serializable {
     
     @OneToMany
     List<Conversation> convos;
-    
-   
-
 
     public User() {
      
