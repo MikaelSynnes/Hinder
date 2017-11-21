@@ -45,13 +45,13 @@ public class ForumServices {
 
     @POST
     @Path("add")
-    public Response addMessage(@QueryParam("name") String name, Message message) {
-        if (name != null) {
+    public Response addMessage(@QueryParam("name") int name, Message message) {
+       
             Conversation c = em.find(Conversation.class, name);
             if (c == null) {
                 c = new Conversation();
                 em.persist(c);
-            }
+            
             message.setConversation(c);
             em.persist(message);
 
