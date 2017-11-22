@@ -31,7 +31,7 @@ public class ForumServices {
     EntityManager em;
 
     @GET
-    public List<Message> getMessages(@QueryParam("name") int name) {
+    public List<Message> getMessages(@QueryParam("name") String name) {
         List<Message> result = null;
      
             result = em.createQuery("SELECT m FROM Message m WHERE m.conversation.id = :id",
@@ -45,19 +45,19 @@ public class ForumServices {
 
     @POST
     @Path("add")
-    public Response addMessage(@QueryParam("name") int name, Message message) {
-       
+    public Response addMessage(@QueryParam("name") String name, Message message) {
+         if (name != null) {
             Conversation c = em.find(Conversation.class, name);
             if (c == null) {
                 c = new Conversation();
                 em.persist(c);
-            
+            }
             message.setConversation(c);
             em.persist(message);
 
             return Response.ok(message).build();
         } else {
-            return Response.noContent().build();
+            return Response.ok(message).build();
         }
     }
 

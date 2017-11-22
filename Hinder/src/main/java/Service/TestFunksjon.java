@@ -97,7 +97,7 @@ public class TestFunksjon {
         List<CloseUser>  c;
           dist=new DistanceCalc();
             ArrayList close=new ArrayList();
-        close.add(new CloseUser());
+
     
         Location myLoc=getUserLocation(i);
         List<User> u=getUser();
@@ -106,8 +106,8 @@ public class TestFunksjon {
          
             
                  double  dis=  dist.getDistance(myLoc,userLoc);
-                 System.out.println(dis);
-               if(dis<15.0&&userLoc.getId()!=myLoc.getId()){
+                
+               if(dis<120.0&&userLoc.getId()!=myLoc.getId()){
                    CloseUser cl=new CloseUser();
                    cl.setDistance(dis);
                    cl.setName(us.getName());

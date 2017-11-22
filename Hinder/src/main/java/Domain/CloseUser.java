@@ -12,31 +12,20 @@ package Domain;
 public class CloseUser {
     String name;
     double distance;
-
-    public CloseUser() {
-      
-      
+    public CloseUser() {    
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public double getDistance() {
         return distance;
     }
-
     public void setDistance(double distance) {
         this.distance = distance;
     }
-    
-    
-    
-    
 }
 
 
