@@ -5,8 +5,10 @@
  */
 package Service;
 
+import Domain.Close;
 import Domain.CloseUser;
 import Domain.Conversation;
+
 import Domain.Location;
 import Domain.Message;
 import Domain.User;
@@ -93,8 +95,8 @@ public class TestFunksjon {
     
     @Path("getclose")
     @GET
-    public List<CloseUser> getClose(@QueryParam("id") String i){
-        List<CloseUser>  c;
+    public List<Close> getClose(@QueryParam("id") String i){
+        List<Close>  c;
           dist=new DistanceCalc();
             ArrayList close=new ArrayList();
 
@@ -108,7 +110,7 @@ public class TestFunksjon {
                  double  dis=  dist.getDistance(myLoc,userLoc);
                 
                if(dis<120.0&&userLoc.getId()!=myLoc.getId()){
-                   CloseUser cl=new CloseUser();
+                   Close cl=new Close();
                    cl.setDistance(dis);
                    cl.setName(us.getName());
                 close.add(cl);             
@@ -209,7 +211,12 @@ public class TestFunksjon {
         List<Conversation> convos=null;
         try{
               User user =getUser(name);
-               return user.getConversations();
+               convos= user.getConversations();
+               for(Conversation convo:convos){
+                   
+               }
+           return convos;
+               
         }catch(Exception e){
             return Collections.EMPTY_LIST;
         }
@@ -230,15 +237,25 @@ public class TestFunksjon {
             User a=getUser(name1);
             User b=getUser(name2);
             Conversation c=new Conversation();
-            addConversation(a,c);
-            addConversation(b,c);
-            em.persist(c);
             
+              em.persist(c);
+            addConversation(a,b,c);
+            addConversation(b,a,c);
+            
+          
             
             return c;
         }
         return null;
             
+    }
+    private Conversation getConversation(String i){
+           try{
+        return em.createQuery("SELECT c FROM Conversation c WHERE c.id = :idParam",Conversation.class).setParameter("idParam", i).getSingleResult();
+        }catch(Exception e){
+            return null;
+            
+        }
     }
     
     
@@ -246,8 +263,15 @@ public class TestFunksjon {
          return em.createQuery("SELECT u FROM User u WHERE u.name= :nameParam", User.class).setParameter("nameParam", name).getSingleResult();
     }
     
-    private void addConversation(User u,Conversation c){
+    private void addConversation(User u, User b,Conversation c){
                 u.addConvo(c);
+                 dist=new DistanceCalc();
+                CloseUser user= new CloseUser();
+                user.setName(u.getName());
+               double distance =dist.getDistance(getLocation(u.getLocation()),getLocation(b.getLocation()));
+                user.setDistance(distance);
+                em.persist(user);
+                c.addtoUserNames(user);
     }
 
     public Boolean checkUser(String name) {

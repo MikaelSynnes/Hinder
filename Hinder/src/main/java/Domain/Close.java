@@ -5,40 +5,35 @@
  */
 package Domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
 
 /**
  *
  * @author Mikael
  */
-@Entity
-public class CloseUser {
-
-    @Id
-    @GeneratedValue
-    String id;
+  
+public class Close {
+   
+  
     String name;
     double distance;
-
-    public CloseUser() {
+  
+    public Close() {    
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public double getDistance() {
         return distance;
     }
-
     public void setDistance(double distance) {
         this.distance = distance;
     }
 
+ 
 }
+
+
