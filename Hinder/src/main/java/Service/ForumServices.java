@@ -33,12 +33,12 @@ public class ForumServices {
     @GET
     public List<Message> getMessages(@QueryParam("name") String name) {
         List<Message> result = null;
-        if (name != null) {
+     
             result = em.createQuery("SELECT m FROM Message m WHERE m.conversation.id = :id",
                     Message.class)
                     .setParameter("id", name)
                     .getResultList();
-        }
+        
 
         return result != null ? result : Collections.EMPTY_LIST;
     }
@@ -46,7 +46,7 @@ public class ForumServices {
     @POST
     @Path("add")
     public Response addMessage(@QueryParam("name") String name, Message message) {
-        if (name != null) {
+         if (name != null) {
             Conversation c = em.find(Conversation.class, name);
             if (c == null) {
                 c = new Conversation();
@@ -57,7 +57,7 @@ public class ForumServices {
 
             return Response.ok(message).build();
         } else {
-            return Response.noContent().build();
+            return Response.ok(message).build();
         }
     }
 

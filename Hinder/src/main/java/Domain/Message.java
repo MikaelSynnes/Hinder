@@ -29,7 +29,7 @@ public class Message implements Serializable {
     Long id;
     
     @Column(name = "name")
-    String user;
+    String name;
     String text;
     
     @Version
@@ -39,8 +39,8 @@ public class Message implements Serializable {
     @ManyToOne(optional = false,cascade = CascadeType.PERSIST)
     Conversation conversation;
 
-    public Message(String user, String text) {
-        this.user = user;
+    public Message(String name, String text) {
+        this.name = name;
         this.text = text;
     }
 }

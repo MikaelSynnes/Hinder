@@ -19,42 +19,44 @@ import lombok.NoArgsConstructor;
  *
  * @author Mikael
  */
-
-@Data @NoArgsConstructor
+@Data
+@NoArgsConstructor
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 
 public class Location implements Serializable {
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     protected long id;
-    int latitude;
-    int longitude;
-    
-    
-    public Location(int latitude, int longitude){
-        this.latitude=latitude;
-        this.longitude=longitude;
-     
+    double latitude;
+    double longitude;
+
+    public Location(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+
     }
-    public long getId(){
+
+    public long getId() {
         return id;
     }
 
-    public int getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public int getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLatitude(int latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(int longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-    
+
 }

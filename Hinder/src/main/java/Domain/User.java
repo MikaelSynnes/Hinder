@@ -20,6 +20,7 @@ import javax.persistence.Table;
  * @author Mikael
  */
 @Entity
+
 @Table(name = "HUSER")
 public class User implements Serializable {
 
@@ -31,9 +32,6 @@ public class User implements Serializable {
     
     @OneToMany
     List<Conversation> convos;
-    
-   
-
 
     public User() {
      
@@ -53,6 +51,9 @@ public class User implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+    public List<Conversation> getConversations(){
+        return convos;
     }
 
     public void setName(String name) {
