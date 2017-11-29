@@ -23,7 +23,7 @@ import javax.persistence.GeneratedValue;
  *
  * @author mikael
  */
-@Data
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
