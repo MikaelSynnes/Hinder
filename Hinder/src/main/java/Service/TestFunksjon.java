@@ -206,16 +206,22 @@ public class TestFunksjon {
     
     @Path("getConv")
     @GET
-    public List<Conversation> getConv(@QueryParam("name") String name){
-        
+    public List<CloseUser> getConv(@QueryParam("name") String name){
+        List<CloseUser> users=new ArrayList<>();
         List<Conversation> convos=null;
         try{
               User user =getUser(name);
                convos= user.getConversations();
                for(Conversation convo:convos){
+                  List<CloseUser> close =convo.getUsernames();
+              for(CloseUser c:close){
+                  if(c.getName() == null ? name != null : !c.getName().equals(name)){
+                      users.add(c);
+                  }
+              }
                    
                }
-           return convos;
+           return users;
                
         }catch(Exception e){
             return Collections.EMPTY_LIST;
