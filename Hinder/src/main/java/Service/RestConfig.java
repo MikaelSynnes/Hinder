@@ -22,7 +22,7 @@ public class RestConfig extends Application {
     }
     
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(Service.ApiFunksjon.class);
         resources.add(Service.ForumServices.class);
-        resources.add(Service.TestFunksjon.class);
     }
 }
